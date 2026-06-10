@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarvesh Kumar — QA Engineer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --bg2: #0f1520;
+    --bg3: #131c2b;
+    --card: #111827;
+    --border: #1e2d42;
+    --cyan: #00d4ff;
+    --cyan2: #00b8d9;
+    --purple: #a855f7;
+    --pink: #ec4899;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --dim: #4b5563;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    background: rgba(10,14,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--cyan);
+    letter-spacing: 0.5px;
+  }
+  .nav-logo span { color: #fff; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .hire-btn {
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #fff; border: none; padding: 0.5rem 1.25rem;
+    border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .hire-btn:hover { opacity: 0.85; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; width: 700px; height: 700px;
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+  .glow-left { background: radial-gradient(ellipse, rgba(0,180,255,0.08) 0%, transparent 70%); top: -100px; left: -200px; }
+  .glow-right { background: radial-gradient(ellipse, rgba(168,85,247,0.08) 0%, transparent 70%); top: -50px; right: -200px; }
+  .hero-glow-bottom { background: radial-gradient(ellipse, rgba(236,72,153,0.06) 0%, transparent 70%); bottom: -200px; left: 50%; transform: translateX(-50%); }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50px; padding: 0.35rem 1rem;
+    font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  h1.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 700; line-height: 1.1;
+    margin-bottom: 1rem; position: relative; z-index: 1;
+  }
+  .hero-title .white { color: #fff; }
+  .hero-title .grad {
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.2rem; color: var(--muted); margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+  }
+  .hero-sub .accent { color: var(--cyan); font-weight: 600; }
+  .hero-desc {
+    max-width: 640px; color: var(--muted); font-size: 1rem;
+    margin-bottom: 2.5rem; position: relative; z-index: 1;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; margin-bottom: 2.5rem; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #fff; padding: 0.75rem 1.75rem; border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--border); color: var(--text);
+    padding: 0.75rem 1.75rem; border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--cyan); background: rgba(0,212,255,0.06); }
+  .hero-icons { display: flex; gap: 1rem; position: relative; z-index: 1; }
+  .hero-icon {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .hero-icon:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,0.08); }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    text-align: center; color: var(--dim); font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; z-index: 1;
+  }
+  .scroll-mouse {
+    width: 22px; height: 34px; border: 2px solid var(--dim);
+    border-radius: 12px; margin: 0 auto 0.4rem;
+    position: relative; display: flex; justify-content: center; padding-top: 6px;
+  }
+  .scroll-mouse::after {
+    content: ''; width: 4px; height: 7px; background: var(--dim);
+    border-radius: 2px; animation: scrollDown 1.8s infinite;
+  }
+  @keyframes scrollDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    color: var(--cyan); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: center;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700;
+    text-align: center; margin-bottom: 0.75rem;
+  }
+  .section-sub { text-align: center; color: var(--muted); margin-bottom: 3rem; }
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+
+  /* ABOUT */
+  #about .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.5rem; text-align: center;
+  }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--cyan); }
+  .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; }
+  .domain-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .domain-tag {
+    background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+    color: var(--cyan); padding: 0.3rem 0.85rem; border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+  }
+
+  /* SKILLS */
+  #skills { max-width: 1100px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    border-top: 2px solid rgba(0,212,255,0.2);
+  }
+  .skill-card:hover { border-color: rgba(0,212,255,0.45); border-top-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.07); }
+  .skill-card-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .skill-icon { color: var(--cyan); font-size: 1.1rem; }
+  .skill-card-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    border: 1px solid rgba(0,212,255,0.25); color: var(--cyan);
+    padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500;
+    background: rgba(0,212,255,0.04);
+  }
+
+  /* EXPERIENCE */
+  #experience { max-width: 1100px; }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--cyan), var(--purple)); border-radius: 1px; }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-dot {
+    position: absolute; left: -2.44rem; top: 0.25rem;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--cyan); border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--cyan);
+  }
+  .exp-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .exp-card:hover { border-color: rgba(0,212,255,0.3); box-shadow: 0 8px 32px rgba(0,212,255,0.06); }
+  .exp-role { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .exp-company { color: var(--cyan); font-weight: 600; margin-bottom: 0.75rem; }
+  .exp-date {
+    display: inline-block; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3);
+    color: #c084fc; padding: 0.25rem 0.85rem; border-radius: 50px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1.25rem;
+  }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    color: var(--muted); font-size: 0.92rem; padding: 0.4rem 0;
+    display: flex; gap: 0.6rem; align-items: flex-start; line-height: 1.55;
+  }
+  .exp-bullets li::before { content: '▸'; color: var(--cyan); flex-shrink: 0; margin-top: 0.1rem; }
+  strong { color: var(--text); display: inline; }
+  .exp-bullets li { word-spacing: normal; letter-spacing: normal; }
+
+  /* PROJECTS */
+  #projects { max-width: 1100px; }
+  .project-filters { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 0.45rem 1.25rem; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--cyan); color: #0a0e14; border-color: var(--cyan);
+  }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s; display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-3px); }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem; }
+  .project-icon {
+    width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+  .project-badge {
+    font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 6px;
+  }
+  .badge-web { background: rgba(0,212,255,0.15); color: var(--cyan); }
+  .badge-mobile { background: rgba(168,85,247,0.15); color: #c084fc; }
+  .badge-internal { background: rgba(236,72,153,0.15); color: #f472b6; }
+  .project-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .project-type { color: var(--cyan); font-size: 0.8rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .project-desc { color: var(--muted); font-size: 0.88rem; flex: 1; margin-bottom: 1rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-tag {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 5px; font-size: 0.75rem;
+  }
+
+  /* CONTACT */
+  #contact {
+    max-width: 700px; text-align: center;
+  }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 3rem; margin-top: 2rem;
+  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left; margin-top: 2rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.25rem;
+  }
+  .contact-ic { color: var(--cyan); font-size: 1.1rem; }
+  .contact-label { font-size: 0.75rem; color: var(--dim); }
+  .contact-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border); color: var(--dim); font-size: 0.82rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    #about .about-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    section { padding: 4rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">&lt;<span>SK</span> /&gt;</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="hire-btn">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow glow-left"></div>
+  <div class="hero-glow glow-right"></div>
+  <div class="hero-glow hero-glow-bottom"></div>
+
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    Available for opportunities
+  </div>
+
+  <h1 class="hero-title">
+    <span class="white">Hi, I'm </span><span class="grad">Sarvesh Kumar</span>
+  </h1>
+
+  <p class="hero-sub">
+    I ensure <span class="accent">Quality in Web, Mobile &amp; API</span> Testing
+  </p>
+
+  <p class="hero-desc">
+    QA Engineer with 10+ years of experience in Manual &amp; Automation Testing. Skilled in Selenium with Java, Postman, and Agile delivery across Logistics, Healthcare, and EdTech domains.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">
+      🚀 View My Work
+    </a>
+    <a href="#contact" class="btn-outline">
+      ✉️ Get In Touch
+    </a>
+    <a href="#experience" class="btn-outline" style="border-color:transparent; color:var(--muted);">
+      ↓ Resume
+    </a>
+  </div>
+
+  <div class="hero-icons">
+    <a href="mailto:SarveshKumar123@gmail.com" class="hero-icon" title="Email">✉</a>
+    <a href="tel:+918750919008" class="hero-icon" title="Phone">📞</a>
+    <a href="#" class="hero-icon" title="LinkedIn">in</a>
+    <a href="#" class="hero-icon" title="GitHub">⌥</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-mouse"></div>
+    SCROLL DOWN
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow">01.</p>
+  <h2 class="section-title">About Me</h2>
+  <p class="section-sub">A dedicated QA professional ensuring quality at every stage</p>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Quality Assurance Engineer with <strong>8+ years of experience in Manual Testing</strong> including 2+ years in Automation using Selenium with Java. Based in Ghaziabad, U.P., working at RSystems International Ltd.</p>
+      <p>Skilled in functional, regression, integration, and API testing with Postman. Experienced across multiple domains in Agile/Scrum environments, focused on delivering high-quality releases on time.</p>
+      <p>Currently leading the QA team as <strong>Team Lead – QC</strong>, managing test planning, execution, bug tracking, and automation scripting for enterprise-grade applications serving international clients.</p>
+      <div class="domain-tags">
+        <span class="domain-tag">Logistics / Reverse Logistics</span>
+        <span class="domain-tag">Healthcare</span>
+        <span class="domain-tag">Audit Management</span>
+        <span class="domain-tag">EdTech / Training Management</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Manual Testing Years</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Automation Testing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Key Projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-eyebrow">02.</p>
+  <h2 class="section-title">Tech Stack</h2>
+  <p class="section-sub">Tools &amp; technologies I work with daily to deliver quality software</p>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🧪</span>
+        <span class="skill-card-title">Manual Testing</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Functional</span>
+        <span class="skill-tag">Regression</span>
+        <span class="skill-tag">Integration</span>
+        <span class="skill-tag">System</span>
+        <span class="skill-tag">Smoke &amp; Sanity</span>
+        <span class="skill-tag">Exploratory</span>
+        <span class="skill-tag">GUI Testing</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">📱</span>
+        <span class="skill-card-title">Mobile Testing</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Android</span>
+        <span class="skill-tag">iOS</span>
+        <span class="skill-tag">Real Devices</span>
+        <span class="skill-tag">Emulators</span>
+        <span class="skill-tag">Functional</span>
+        <span class="skill-tag">UI Testing</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">⚙️</span>
+        <span class="skill-card-title">Automation Testing</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Selenium WebDriver</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">TestNG</span>
+        <span class="skill-tag">POM</span>
+        <span class="skill-tag">Maven</span>
+        <span class="skill-tag">Hybrid Framework</span>
+        <span class="skill-tag">Jenkins CI/CD</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🌐</span>
+        <span class="skill-card-title">API &amp; Tools</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Postman</span>
+        <span class="skill-tag">REST API Testing</span>
+        <span class="skill-tag">Azure DevOps</span>
+        <span class="skill-tag">JIRA</span>
+        <span class="skill-tag">GIT / GitHub</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🗄️</span>
+        <span class="skill-card-title">Database</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">CRUD Testing</span>
+        <span class="skill-tag">Data Integrity</span>
+        <span class="skill-tag">Core Java</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <span class="skill-icon">🤖</span>
+        <span class="skill-card-title">Methodology &amp; AI</span>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">Agile</span>
+        <span class="skill-tag">Scrum</span>
+        <span class="skill-tag">ChatGPT</span>
+        <span class="skill-tag">Claude AI</span>
+        <span class="skill-tag">Test Rigor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-eyebrow">03.</p>
+  <h2 class="section-title">Experience</h2>
+  <p class="section-sub">A decade of delivering quality software at RSystems International</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-card">
+        <div class="exp-role">Team Lead – QC</div>
+        <div class="exp-company">RSystems International Ltd., Noida (U.P)</div>
+        <span class="exp-date">Jan 2015 — Present</span>
+        <ul class="exp-bullets">
+          <li>Lead the QA team in testing <strong>web applications, mobile apps, and APIs</strong> for international clients.</li>
+          <li>Conducted manual testing including functional, regression, GUI, Ad-hoc, and exploratory testing.</li>
+          <li>Prepared Test documents — <strong>Test Plan, Test Scenarios, Test Cases, and User Manuals</strong>.</li>
+          <li>Perform automation testing of web applications using <strong>Selenium WebDriver and Java</strong> with TestNG, Maven, and Hybrid Framework.</li>
+          <li>Managed bug tracking and resolution through <strong>Azure DevOps and JIRA</strong>.</li>
+          <li>Collaborated with cross-functional teams to ensure smooth project delivery in Agile/Scrum.</li>
+          <li>Conducted <strong>database testing</strong> by validating data integrity during CRUD operations.</li>
+          <li>Performed <strong>Web API Testing</strong> using Postman for RESTful services.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:var(--purple); box-shadow: 0 0 0 2px var(--purple);"></div>
+      <div class="exp-card">
+        <div class="exp-role">MIS / Production Support</div>
+        <div class="exp-company">RSystems International Ltd., Noida (U.P)</div>
+        <span class="exp-date" style="background:rgba(0,212,255,0.12); border-color:rgba(0,212,255,0.3); color:var(--cyan);">Jan 2010 — Jan 2015</span>
+        <ul class="exp-bullets">
+          <li>Handled <strong>MIS reporting and production support</strong> for enterprise applications.</li>
+          <li>Supported data validation and reporting pipelines for business units.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-eyebrow">04.</p>
+  <h2 class="section-title">Key Projects</h2>
+  <p class="section-sub">Production applications I've tested and quality-assured</p>
+
+  <div class="project-filters">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Web Apps</button>
+    <button class="filter-btn">Mobile Apps</button>
+    <button class="filter-btn">Internal</button>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(0,180,255,0.15);">🏥</div>
+        <span class="project-badge badge-web">Web App</span>
+      </div>
+      <div class="project-name">CHN – Resource Planner</div>
+      <div class="project-type">Community Health Network • Client: USA (Chicago)</div>
+      <p class="project-desc">Web-based resource management app for employee attendance, leave tracking, and working hours. Supports Admin, Manager, and Employee roles with UKG integration for attendance data.</p>
+      <div class="project-tags">
+        <span class="project-tag">Selenium</span>
+        <span class="project-tag">Java</span>
+        <span class="project-tag">TestNG</span>
+        <span class="project-tag">Postman</span>
+        <span class="project-tag">SQL Server</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(168,85,247,0.15);">🔄</div>
+        <span class="project-badge badge-web">Web App</span>
+      </div>
+      <div class="project-name">EARL</div>
+      <div class="project-type">Extended App for Reverse Logistics • Client: USA (Chicago)</div>
+      <p class="project-desc">Reverse logistics platform for Philips Hotel TV, MMD, and IKEA. Manages product warranties, RMA/complaint requests, and service resolution — repair or replacement based on warranty allocation.</p>
+      <div class="project-tags">
+        <span class="project-tag">Selenium</span>
+        <span class="project-tag">Java</span>
+        <span class="project-tag">Postman</span>
+        <span class="project-tag">Regression</span>
+        <span class="project-tag">Security</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(34,197,94,0.15);">📱</div>
+        <span class="project-badge badge-mobile">Mobile App</span>
+      </div>
+      <div class="project-name">MyCHN Mobile</div>
+      <div class="project-type">Healthcare App • Client: USA</div>
+      <p class="project-desc">Mobile healthcare app allowing patients to book virtual or in-person doctor consultations, integrating health data from glucometers and BP monitors, and maintaining digital health records.</p>
+      <div class="project-tags">
+        <span class="project-tag">Android</span>
+        <span class="project-tag">iOS</span>
+        <span class="project-tag">Functional</span>
+        <span class="project-tag">UI Testing</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(236,72,153,0.15);">📋</div>
+        <span class="project-badge badge-internal">Internal</span>
+      </div>
+      <div class="project-name">RCAP</div>
+      <div class="project-type">Audit Management System • Internal</div>
+      <p class="project-desc">Enterprise audit management system for tracking compliance, conducting internal audits, and managing corrective action plans across business units.</p>
+      <div class="project-tags">
+        <span class="project-tag">Manual Testing</span>
+        <span class="project-tag">Regression</span>
+        <span class="project-tag">Azure DevOps</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(251,191,36,0.15);">🎓</div>
+        <span class="project-badge badge-internal">Internal</span>
+      </div>
+      <div class="project-name">Digital Learning System (DLS)</div>
+      <div class="project-type">EdTech / Training Management • Internal</div>
+      <p class="project-desc">Corporate training and development platform with three user roles (Admin, Trainer, Trainee), course management, assessments, certifications, and gamification features.</p>
+      <div class="project-tags">
+        <span class="project-tag">Manual Testing</span>
+        <span class="project-tag">Functional</span>
+        <span class="project-tag">JIRA</span>
+        <span class="project-tag">MySQL</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(99,102,241,0.15);">📝</div>
+        <span class="project-badge badge-internal">Internal</span>
+      </div>
+      <div class="project-name">OET &amp; Knowledge Base</div>
+      <div class="project-type">Online Exam Tool + Knowledge Management</div>
+      <p class="project-desc">Online Examination Tool for conducting assessments, alongside a Knowledge Base Management System for organizing and retrieving organizational knowledge assets.</p>
+      <div class="project-tags">
+        <span class="project-tag">Manual Testing</span>
+        <span class="project-tag">GUI Testing</span>
+        <span class="project-tag">API Testing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-eyebrow">05.</p>
+  <h2 class="section-title">Get In Touch</h2>
+  <p class="section-sub">Open to QA opportunities, collaborations, and freelance projects</p>
+
+  <div class="contact-card">
+    <p style="color:var(--muted); margin-bottom:1.5rem;">Whether you need a QA Lead, want to discuss an exciting project, or are hiring for your team — I'd love to connect!</p>
+    <a href="mailto:SarveshKumar123@gmail.com" class="btn-primary" style="display:inline-flex; margin-bottom:2rem;">✉️ Send me an email</a>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="contact-ic">📍</span>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-val">Nandgram, Ghaziabad-201003, U.P.</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-ic">📞</span>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-val">+91-8750919008</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-ic">✉️</span>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val">SarveshKumar123@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-ic">🎓</span>
+        <div>
+          <div class="contact-label">Education</div>
+          <div class="contact-val">MCA – AKTU University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; Built by <strong style="color:var(--cyan);">Sarvesh Kumar</strong> &nbsp;•&nbsp; QA Engineer &nbsp;•&nbsp; Nandgram, Ghaziabad-201003, U.P.</p>
+</footer>
+
+<script>
+  // Filter buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.skill-card, .project-card, .exp-card, .stat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.2s';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
