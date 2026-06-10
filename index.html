@@ -227,12 +227,15 @@
   }
   .exp-bullets { list-style: none; }
   .exp-bullets li {
-    color: var(--muted); font-size: 0.92rem; padding: 0.4rem 0;
-    display: flex; gap: 0.6rem; align-items: flex-start; line-height: 1.55;
+    color: var(--muted); font-size: 0.92rem; padding: 0.35rem 0 0.35rem 1.2rem;
+    line-height: 1.6; position: relative;
   }
-  .exp-bullets li::before { content: '▸'; color: var(--cyan); flex-shrink: 0; margin-top: 0.1rem; }
-  strong { color: var(--text); display: inline; }
-  .exp-bullets li { word-spacing: normal; letter-spacing: normal; }
+  .exp-bullets li::before {
+    content: '▸'; color: var(--cyan);
+    position: absolute; left: 0; top: 0.38rem;
+    font-size: 0.75rem;
+  }
+  strong { color: var(--text); font-weight: 700; }
 
   /* PROJECTS */
   #projects { max-width: 1100px; }
@@ -573,7 +576,7 @@
   </div>
 
   <div class="projects-grid">
-    <div class="project-card">
+    <div class="project-card" data-category="web">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(0,180,255,0.15);">🏥</div>
         <span class="project-badge badge-web">Web App</span>
@@ -590,7 +593,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="web">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(168,85,247,0.15);">🔄</div>
         <span class="project-badge badge-web">Web App</span>
@@ -607,7 +610,24 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="mobile">
+      <div class="project-header">
+        <div class="project-icon" style="background:rgba(168,85,247,0.15);">🔄</div>
+        <span class="project-badge badge-mobile">Mobile App</span>
+      </div>
+      <div class="project-name">EARL Mobile</div>
+      <div class="project-type">Extended App for Reverse Logistics • Client: USA (Chicago)</div>
+      <p class="project-desc">Mobile version of the reverse logistics platform for Philips Hotel TV, MMD, and IKEA. Used to create new RMA requests, update existing RMA entries, and manage the Stock Management process on the go.</p>
+      <div class="project-tags">
+        <span class="project-tag">Android</span>
+        <span class="project-tag">iOS</span>
+        <span class="project-tag">Postman</span>
+        <span class="project-tag">Regression</span>
+        <span class="project-tag">UI Testing</span>
+      </div>
+    </div>
+
+    <div class="project-card" data-category="mobile">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(34,197,94,0.15);">📱</div>
         <span class="project-badge badge-mobile">Mobile App</span>
@@ -623,7 +643,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="internal">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(236,72,153,0.15);">📋</div>
         <span class="project-badge badge-internal">Internal</span>
@@ -638,7 +658,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="internal">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(251,191,36,0.15);">🎓</div>
         <span class="project-badge badge-internal">Internal</span>
@@ -654,7 +674,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="internal">
       <div class="project-header">
         <div class="project-icon" style="background:rgba(99,102,241,0.15);">📝</div>
         <span class="project-badge badge-internal">Internal</span>
@@ -723,10 +743,32 @@
 <script>
   // Filter buttons
   const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  const categoryMap = {
+    'All': 'all',
+    'Web Apps': 'web',
+    'Mobile Apps': 'mobile',
+    'Internal': 'internal'
+  };
+
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
+      const selected = categoryMap[btn.textContent.trim()];
+
+      projectCards.forEach(card => {
+        if (selected === 'all' || card.dataset.category === selected) {
+          card.style.display = 'flex';
+          setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          setTimeout(() => { card.style.display = 'none'; }, 300);
+        }
+      });
     });
   });
 
